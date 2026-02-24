@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dostoevsky's Mathematical Redemption</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- ═══ OVERLAY QUOTE MODAL ═══ -->
+  <div id="quote-modal" class="quote-modal hidden">
+    <div class="quote-modal-backdrop"></div>
+    <div class="quote-modal-content">
+      <div class="quote-ornament top">❦</div>
+      <div class="quote-icon">📖</div>
+      <p class="quote-label">Your Reward</p>
+      <blockquote id="modal-quote-text"></blockquote>
+      <cite id="modal-quote-source"></cite>
+      <div class="quote-ornament bottom">❦</div>
+      <button id="modal-close" class="btn btn-gold">Continue Seeking Truth</button>
+    </div>
+  </div>
+
+  <!-- ═══ MAIN HEADER ═══ -->
+  <header class="main-header">
+    <div class="header-inner">
+      <div class="title-group">
+        <h1 class="site-title">Досто<span class="accent">е</span>вский</h1>
+        <p class="site-subtitle">Mathematical Redemption</p>
+      </div>
+      <div class="stats-bar">
+        <div class="stat">
+          <span class="stat-icon">🧮</span>
+          <span class="stat-label">Solved</span>
+          <span id="stat-solved" class="stat-value">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-icon">🔥</span>
+          <span class="stat-label">Streak</span>
+          <span id="stat-streak" class="stat-value">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-icon">📖</span>
+          <span class="stat-label">Quotes</span>
+          <span id="stat-quotes" class="stat-value">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ NAVIGATION ═══ -->
+  <nav class="main-nav">
+    <button class="nav-btn active" data-tab="practice">
+      <span class="nav-icon">📝</span>
+      <span class="nav-text">Practice Problems</span>
+    </button>
+    <button class="nav-btn" data-tab="calculator">
+      <span class="nav-icon">🧮</span>
+      <span class="nav-text">Calculator</span>
+    </button>
+    <button class="nav-btn" data-tab="solver">
+      <span class="nav-icon">🔬</span>
+      <span class="nav-text">Equation Solver</span>
+    </button>
+    <button class="nav-btn" data-tab="collection">
+      <span class="nav-icon">📚</span>
+      <span class="nav-text">Quote Collection</span>
+    </button>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="content">
+
+    <!-- ── PRACTICE PROBLEMS TAB ── -->
+    <section id="tab-practice" class="tab-panel active">
+      <div class="panel-header">
+        <h2>Practice Problems</h2>
+        <p class="panel-desc">Solve problems to earn wisdom from the great novelist. Each correct answer reveals a quote from Dostoevsky's works.</p>
+      </div>
+
+      <div class="difficulty-selector">
+        <label>Difficulty:</label>
+        <button class="diff-btn active" data-difficulty="easy">Easy</button>
+        <button class="diff-btn" data-difficulty="medium">Medium</button>
+        <button class="diff-btn" data-difficulty="hard">Hard</button>
+      </div>
+
+      <div class="category-selector">
+        <label>Category:</label>
+        <button class="cat-btn active" data-category="arithmetic">Arithmetic</button>
+        <button class="cat-btn" data-category="algebra">Algebra</button>
+        <button class="cat-btn" data-category="geometry">Geometry</button>
+        <button class="cat-btn" data-category="calculus">Calculus</button>
+      </div>
+
+      <div class="problem-area">
+        <div class="problem-card">
+          <div class="problem-number">Problem <span id="problem-num">1</span></div>
+          <div id="problem-text" class="problem-text">Press "New Problem" to begin your journey...</div>
+          <div class="answer-row">
+            <input type="text" id="answer-input" class="answer-input" placeholder="Enter your answer..." autocomplete="off">
+            <button id="submit-answer" class="btn btn-submit">Submit</button>
+          </div>
+          <div id="feedback" class="feedback hidden"></div>
+          <div class="problem-actions">
+            <button id="hint-btn" class="btn btn-secondary">💡 Hint</button>
+            <button id="new-problem" class="btn btn-primary">New Problem</button>
+            <button id="show-solution" class="btn btn-secondary">📋 Solution</button>
+          </div>
+          <div id="hint-area" class="hint-area hidden"></div>
+          <div id="solution-area" class="solution-area hidden"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CALCULATOR TAB ── -->
+    <section id="tab-calculator" class="tab-panel">
+      <div class="panel-header">
+        <h2>Scientific Calculator</h2>
+        <p class="panel-desc">"Man only likes to count his troubles; he doesn't calculate his happiness." — Let us calculate with purpose.</p>
+      </div>
+
+      <div class="calculator">
+        <div class="calc-display">
+          <div id="calc-history" class="calc-history"></div>
+          <input type="text" id="calc-input" class="calc-input" value="0" readonly>
+        </div>
+        <div class="calc-buttons">
+          <button class="calc-btn func" data-action="clear">C</button>
+          <button class="calc-btn func" data-action="backspace">⌫</button>
+          <button class="calc-btn func" data-action="percent">%</button>
+          <button class="calc-btn operator" data-action="divide">÷</button>
+
+          <button class="calc-btn func" data-action="sin">sin</button>
+          <button class="calc-btn func" data-action="cos">cos</button>
+          <button class="calc-btn func" data-action="tan">tan</button>
+          <button class="calc-btn operator" data-action="multiply">×</button>
+
+          <button class="calc-btn number" data-action="7">7</button>
+          <button class="calc-btn number" data-action="8">8</button>
+          <button class="calc-btn number" data-action="9">9</button>
+          <button class="calc-btn operator" data-action="subtract">−</button>
+
+          <button class="calc-btn number" data-action="4">4</button>
+          <button class="calc-btn number" data-action="5">5</button>
+          <button class="calc-btn number" data-action="6">6</button>
+          <button class="calc-btn operator" data-action="add">+</button>
+
+          <button class="calc-btn number" data-action="1">1</button>
+          <button class="calc-btn number" data-action="2">2</button>
+          <button class="calc-btn number" data-action="3">3</button>
+          <button class="calc-btn equals" data-action="equals">=</button>
+
+          <button class="calc-btn func" data-action="sqrt">√</button>
+          <button class="calc-btn number" data-action="0">0</button>
+          <button class="calc-btn number" data-action="decimal">.</button>
+          <button class="calc-btn func" data-action="power">x²</button>
+        </div>
+        <div id="calc-quote-reward" class="calc-quote-reward hidden">
+          <p class="calc-quote-label">✨ A calculation completed — here is your wisdom:</p>
+          <blockquote id="calc-reward-text"></blockquote>
+          <cite id="calc-reward-source"></cite>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── EQUATION SOLVER TAB ── -->
+    <section id="tab-solver" class="tab-panel">
+      <div class="panel-header">
+        <h2>Equation Solver</h2>
+        <p class="panel-desc">"Taking a new step, uttering a new word, is what people fear most." — Solve an equation, earn a truth.</p>
+      </div>
+
+      <div class="solver-area">
+        <div class="solver-type-selector">
+          <button class="solver-type-btn active" data-type="linear">Linear (ax + b = c)</button>
+          <button class="solver-type-btn" data-type="quadratic">Quadratic (ax² + bx + c = 0)</button>
+          <button class="solver-type-btn" data-type="system">System of 2 Equations</button>
+        </div>
+
+        <!-- Linear Solver -->
+        <div id="solver-linear" class="solver-form active">
+          <div class="equation-display">
+            <input type="number" id="lin-a" class="coeff-input" placeholder="a" step="any"> x +
+            <input type="number" id="lin-b" class="coeff-input" placeholder="b" step="any"> =
+            <input type="number" id="lin-c" class="coeff-input" placeholder="c" step="any">
+          </div>
+          <button id="solve-linear" class="btn btn-primary">Solve for x</button>
+        </div>
+
+        <!-- Quadratic Solver -->
+        <div id="solver-quadratic" class="solver-form">
+          <div class="equation-display">
+            <input type="number" id="quad-a" class="coeff-input" placeholder="a" step="any"> x² +
+            <input type="number" id="quad-b" class="coeff-input" placeholder="b" step="any"> x +
+            <input type="number" id="quad-c" class="coeff-input" placeholder="c" step="any"> = 0
+          </div>
+          <button id="solve-quadratic" class="btn btn-primary">Solve Quadratic</button>
+        </div>
+
+        <!-- System Solver -->
+        <div id="solver-system" class="solver-form">
+          <div class="equation-display system-eq">
+            <div class="system-row">
+              <input type="number" id="sys-a1" class="coeff-input" placeholder="a₁" step="any"> x +
+              <input type="number" id="sys-b1" class="coeff-input" placeholder="b₁" step="any"> y =
+              <input type="number" id="sys-c1" class="coeff-input" placeholder="c₁" step="any">
+            </div>
+            <div class="system-row">
+              <input type="number" id="sys-a2" class="coeff-input" placeholder="a₂" step="any"> x +
+              <input type="number" id="sys-b2" class="coeff-input" placeholder="b₂" step="any"> y =
+              <input type="number" id="sys-c2" class="coeff-input" placeholder="c₂" step="any">
+            </div>
+          </div>
+          <button id="solve-system" class="btn btn-primary">Solve System</button>
+        </div>
+
+        <div id="solver-result" class="solver-result hidden">
+          <h3>Solution</h3>
+          <div id="solver-steps" class="solver-steps"></div>
+        </div>
+
+        <div id="solver-quote-reward" class="solver-quote-reward hidden">
+          <div class="quote-ornament">❦</div>
+          <blockquote id="solver-reward-text"></blockquote>
+          <cite id="solver-reward-source"></cite>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── QUOTE COLLECTION TAB ── -->
+    <section id="tab-collection" class="tab-panel">
+      <div class="panel-header">
+        <h2>Your Quote Collection</h2>
+        <p class="panel-desc">Each earned quote is a gem of wisdom. Solve more problems to grow your collection.</p>
+        <div class="collection-progress">
+          <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+          </div>
+          <span id="progress-text" class="progress-text">0 / 45 quotes collected</span>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="Crime and Punishment">Crime & Punishment</button>
+        <button class="filter-btn" data-filter="The Brothers Karamazov">Brothers Karamazov</button>
+        <button class="filter-btn" data-filter="Notes from Underground">Notes from Underground</button>
+        <button class="filter-btn" data-filter="The Idiot">The Idiot</button>
+        <button class="filter-btn" data-filter="other">Other Works</button>
+      </div>
+
+      <div id="quote-gallery" class="quote-gallery">
+        <!-- Quotes will be rendered dynamically -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="main-footer">
+    <div class="footer-quote">
+      "The soul is healed by being with children." — <em>The Brothers Karamazov</em>
+    </div>
+    <p class="footer-credit">Dostoevsky's Mathematical Redemption · Solve problems, earn wisdom.</p>
+  </footer>
+
+  <script src="quotes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+
