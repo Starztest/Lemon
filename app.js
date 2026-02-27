@@ -15,11 +15,6 @@
     difficulty: "easy",
     category: "arithmetic",
     problemCount: 0,
-    calcExpression: "",
-    calcOperator: null,
-    calcFirstOperand: null,
-    calcWaitingForSecond: false,
-    calcHistory: "",
     calcCount: 0
   };
 
@@ -27,11 +22,12 @@
   function loadState() {
     try {
       const saved = JSON.parse(localStorage.getItem("dostoevsky_math") || "{}");
-      if (saved.solved) state.solved = saved.solved;
-      if (saved.streak) state.streak = saved.streak;
-      if (saved.bestStreak) state.bestStreak = saved.bestStreak;
-      if (saved.quotesEarned) state.quotesEarned = saved.quotesEarned;
-      if (saved.problemCount) state.problemCount = saved.problemCount;
+      if (saved.solved !== undefined) state.solved = saved.solved;
+      if (saved.streak !== undefined) state.streak = saved.streak;
+      if (saved.bestStreak !== undefined) state.bestStreak = saved.bestStreak;
+      if (saved.quotesEarned !== undefined) state.quotesEarned = saved.quotesEarned;
+      if (saved.problemCount !== undefined) state.problemCount = saved.problemCount;
+      if (saved.calcCount !== undefined) state.calcCount = saved.calcCount;
     } catch (e) {}
     updateStats();
   }
@@ -43,7 +39,8 @@
         streak: state.streak,
         bestStreak: state.bestStreak,
         quotesEarned: state.quotesEarned,
-        problemCount: state.problemCount
+        problemCount: state.problemCount,
+        calcCount: state.calcCount
       }));
     } catch (e) {}
   }
@@ -206,7 +203,12 @@
         problem.hint = "Subtract " + b + " from both sides, then divide by " + a + ".";
         problem.solution = a + "x = " + (result - b) + "  →  x = " + (result - b) + "/" + a + " = " + x;
       } else {
-        const x = randInt(-5, 5), a = randInt(2, 5), b = randInt(1, 10), c2 = randInt(1, 5), d2 = randInt(1, 10);
+        const x = randInt(-5, 5), a = randInt(2, 5), b = randInt(1, 10), d2 = randInt(1, 10);
+        // Ensure c2 !== a to avoid division by zero
+        let c2;
+        do {
+          c2 = randInt(1, 5);
+        } while (c2 === a);
         const left = a * x + b, right = c2 * x + d2;
         problem.text = a + "x + " + b + " = " + c2 + "x + " + d2 + ". Solve for x.";
         problem.answer = x;
@@ -311,7 +313,7 @@
     if (isNumericAnswer) {
       const userNum = parseFloat(userAns);
       const correctNum = parseFloat(correctAns);
-      correct = Math.abs(userNum - correctNum) < 0.011;
+      correct = Math.abs(userNum - correctNum) < 0.05;
     } else {
       correct = userAns.replace(/\s/g, "").toLowerCase() === correctAns.replace(/\s/g, "").toLowerCase();
     }
